@@ -129,6 +129,9 @@ For example:
 
       if internal_redirect?
         check_for_infinite_redirects
+        if response_location_host != current_host
+          @custom_headers["Host"] = response_location_host
+        end
         request_page(response_location, :get, {})
       end
 
