@@ -113,7 +113,7 @@ For example:
     def request_page(url, http_method, data) #:nodoc:
       h = headers
       h['HTTP_REFERER'] = @current_url if @current_url
-      if target_host = URI.parse(response_location).host && target_host != current_host
+      if (target_host = URI.parse(url).host) && (target_host != current_host)
         h["Host"] = target_host
       end
       debug_log "REQUESTING PAGE: #{http_method.to_s.upcase} #{url} with #{data.inspect} and HTTP headers #{h.inspect}"
@@ -291,7 +291,7 @@ For example:
     end
 
     def current_host
-      URI.parse(current_url).host || @custom_headers["Host"] || "www.example.com"
+      URI.parse(current_url||"").host || @custom_headers["Host"] || "www.example.com"
     end
 
     def response_location_host
