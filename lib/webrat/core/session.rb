@@ -113,7 +113,9 @@ For example:
     def request_page(url, http_method, data) #:nodoc:
       h = headers
       h['HTTP_REFERER'] = @current_url if @current_url
-
+      if target_host = URI.parse(response_location).host && target_host != current_host
+        h["Host"] = target_host
+      end
       debug_log "REQUESTING PAGE: #{http_method.to_s.upcase} #{url} with #{data.inspect} and HTTP headers #{h.inspect}"
 
       process_request(http_method, url, data, h)
@@ -139,8 +141,7 @@ For example:
     end
 
     def check_for_infinite_redirects
-      if current_url == response_location &&
-          current_host == response_location_host
+      if current_url == response_location
         @_identical_redirect_count ||= 0
         @_identical_redirect_count += 1
       end
