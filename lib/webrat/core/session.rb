@@ -139,7 +139,8 @@ For example:
     end
 
     def check_for_infinite_redirects
-      if current_url == response_location
+      if current_url == response_location &&
+          current_host == response_location_host
         @_identical_redirect_count ||= 0
         @_identical_redirect_count += 1
       end
