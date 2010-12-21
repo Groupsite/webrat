@@ -115,6 +115,7 @@ For example:
       h['HTTP_REFERER'] = @current_url if @current_url
       if (target_host = URI.parse(url).host) && (target_host != current_host)
         h["Host"] = target_host
+        header("Host", target_host)
       end
       debug_log "REQUESTING PAGE: #{http_method.to_s.upcase} #{url} with #{data.inspect} and HTTP headers #{h.inspect}"
 
