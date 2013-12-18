@@ -296,7 +296,7 @@ For example:
     end
 
     def response_location_host
-      URI.parse(response_location).host || "www.example.com"
+      URI.parse(response_location).host || current_host
     end
 
     def reset
